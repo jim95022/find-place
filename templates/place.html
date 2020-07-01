@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block head %} 
+<title>Найти место</title>
+{% endblock %}
+
+{% block body %}
+
+<br><br><br><br>
+      <h1>Я думаю это, {{ place.desc }}</h1>
+<br>
+      <div id="map"></div>
+      <main role="main" class="container">
+          <br><br>
+      <a class='btn btn-primary' style='float: right;' href="/">Найти другое место</a>
+    </main>
+
+<script>
+    function initMap() {
+      var map = new google.maps.Map(document.getElementById('map'), {
+        center: {lat: {{ place.lat }}, lng: {{ place.lng }}},
+        zoom: 18,
+      });
+    }
+</script>
+<script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC9XrXe1rrRiJsBU-ZwalbqCtz2Gy69ZmI&callback=initMap">
+</script>
+{% endblock %}

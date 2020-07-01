@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block head %} 
+<title>Find Place</title>
+{% endblock %}
+
+{% block body %}
+    <br><br><br><br>
+    <main role="main" class="container">
+        <div class="jumbotron">
+          <h1>Привет!</h1>
+          <p class="lead">Здесь ты можешь найти место по фотографии. Для этого достаточно загрузить фотографию ниже</p>
+          <br>
+          <form method=post enctype=multipart/form-data>
+            <input calss='filestyle' style='float: left;' type=file name=file required>
+            <input class='btn btn-primary' style="float: right;" type=submit value='Найти'>
+            </form>
+        </div>
+    </main>
+{% endblock %}
