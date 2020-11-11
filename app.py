@@ -2,10 +2,13 @@ from flask import Flask, render_template, request, redirect, url_for, send_from_
 from werkzeug.utils import secure_filename
 from detect_landmarks import detect_landmarks
 import os
-os.environ["GOOGLE_APPLICATION_CREDENTIALS"]="money0-c11ce91689a6.json"
+
+
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"]="cred.json"
+API_KEY=''
 
 UPLOAD_FOLDER = '/tmp/'
-ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'])
+ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg'])
 
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
@@ -13,12 +16,14 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONS
 
+
 class place():
 
     def __init__(self):
         self.lng = 0
         self.lat = 0
         self.desc = 'None'
+
 
 @app.route('/', methods=['GET', 'POST'])
 def upload_file():
@@ -40,9 +45,10 @@ def upload_file():
 def uploaded_file(filename):
     try:
         place.lat, place.lng, place.desc = detect_landmarks(app.config['UPLOAD_FOLDER'] + filename)
-        return render_template('place.html', place=place)
+        return render_template('place.html', place=place, API_KEY=API_KEY)
     except:
         return render_template('fail.html')
+
 
 if __name__ == "__main__":
     app.run()
